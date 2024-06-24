@@ -53,3 +53,12 @@ Aditya Agrawal
 License
 This project is licensed under the MIT License.
 
+![WhatsApp Image 2024-06-24 at 8 08 03 PM](https://github.com/aditya-agr3/AI-Image-Generation-App/assets/103147141/200b01e0-f0fd-44b6-a85f-74a2ae981c90)
+
+
+![WhatsApp Image 2024-06-24 at 11 04 34 PM](https://github.com/aditya-agr3/AI-Image-Generation-App/assets/103147141/43cc02c1-e5ff-40b6-b0ca-72ad936a232b)
+
+
+![WhatsApp Image 2024-06-24 at 11 04 34 PM (1)](https://github.com/aditya-agr3/AI-Image-Generation-App/assets/103147141/562d0505-0695-49fe-a1de-86b565ae00d3)
+
+
