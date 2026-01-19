@@ -28,7 +28,7 @@ router.route('/').post(async (req, res) => {
         { role: 'user', parts: [{ text: prompt }] },
       ],
       generationConfig: {
-        responseMimeType: 'image/png',
+        responseModalities: ['IMAGE'],
       },
     });
 
