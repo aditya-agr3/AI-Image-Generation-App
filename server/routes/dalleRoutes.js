@@ -1,16 +1,15 @@
 import express from 'express';
 import * as dotenv from 'dotenv';
-import { Configuration, OpenAIApi } from 'openai';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 
 dotenv.config();
 
 const router = express.Router();
 
-const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+const model = genAI.getGenerativeModel({
+  model: process.env.GEMINI_IMAGE_MODEL || 'gemini-2.5-flash-image',
 });
-
-const openai = new OpenAIApi(configuration);
 
 router.route('/').get((req, res) => {
   res.status(200).json({ message: 'Hello from DALL-E!' });
@@ -20,18 +19,31 @@ router.route('/').post(async (req, res) => {
   try {
     const { prompt } = req.body;
 
-    const aiResponse = await openai.createImage({
-      prompt,
-      n: 1,
-      size: '1024x1024',
-      response_format: 'b64_json',
+    if (!process.env.GEMINI_API_KEY) {
+      return res.status(500).json({ message: 'GEMINI_API_KEY is not set' });
+    }
+
+    const result = await model.generateContent({
+      contents: [
+        { role: 'user', parts: [{ text: prompt }] },
+      ],
+      generationConfig: {
+        responseMimeType: 'image/png',
+      },
     });
 
-    const image = aiResponse.data.data[0].b64_json;
+    const imagePart = result?.response?.candidates?.[0]?.content?.parts
+      ?.find((part) => part.inlineData?.data);
+
+    if (!imagePart?.inlineData?.data) {
+      return res.status(500).json({ message: 'No image data returned from Gemini' });
+    }
+
+    const image = imagePart.inlineData.data;
     res.status(200).json({ photo: image });
   } catch (error) {
     console.error(error);
-    res.status(500).send(error?.response.data.error.message || 'Something went wrong');
+    res.status(500).send(error?.response?.data?.error?.message || error?.message || 'Something went wrong');
   }
 });
 

@@ -20,7 +20,7 @@ Usage
 
 Clone the repository.
 Install dependencies with npm install.
-Set up environment variables (e.g., OpenAI API key) in a .env file.
+Set up environment variables (e.g., Gemini API key) in a .env file.
 Run the development server with npm start.
 Access the application at http://localhost:3000 and start generating images!
 Technologies Used
